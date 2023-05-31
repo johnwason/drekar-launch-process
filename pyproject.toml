@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "simple-launch-process"
+version = "0.0.1"
+authors = [
+    {name = "John Wason", email = "wason@wasontech.com"}
+]
+description = "Client library for simple-launch"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.6"
+readme = "README.md"
+
+[tool.setuptools]
+py-modules = [
+    "simple_launch_process"
+]
