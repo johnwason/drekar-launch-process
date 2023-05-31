@@ -14,6 +14,8 @@ def wait_exit():
         signal.sigwait([signal.SIGTERM,signal.SIGINT])
     
 def wait_exit_callback(callback):
+    if sys.platform != "win32":
+        evt = threading.Event()
     def t_func():
         try:
             
@@ -31,10 +33,7 @@ def wait_exit_callback(callback):
                         atexit.unregister(_stop_loop)
                     except Exception: pass
             else:
-                import signal
-                # Unblock signals in callback thread
-                signal.pthread_sigmask(signal.SIG_UNBLOCK, [signal.SIGTERM,signal.SIGINT])
-                signal.sigwait([signal.SIGTERM,signal.SIGINT])
+                evt.wait()
         except Exception:
             traceback.print_exc()
         callback()
@@ -46,7 +45,11 @@ def wait_exit_callback(callback):
     # Block signals in main thread
     if sys.platform != "win32":
         import signal
-        signal.pthread_sigmask(signal.SIG_BLOCK, [signal.SIGTERM,signal.SIGINT])
+        # Send signals to noop handler in main thread
+        def noop_handler(signum, frame):
+            evt.set()
+        signal.signal(signal.SIGTERM, noop_handler)
+        signal.signal(signal.SIGINT, noop_handler)
 
 def wait_exit_stop_loop(loop): 
     wait_exit_callback(lambda: loop.call_soon_threadsafe(loop.stop))
