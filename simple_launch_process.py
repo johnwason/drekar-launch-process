@@ -32,6 +32,8 @@ def wait_exit_callback(callback):
                     except Exception: pass
             else:
                 import signal
+                # Unblock signals in callback thread
+                signal.pthread_sigmask(signal.SIG_UNBLOCK, [signal.SIGTERM,signal.SIGINT])
                 signal.sigwait([signal.SIGTERM,signal.SIGINT])
         except Exception:
             traceback.print_exc()
@@ -40,6 +42,11 @@ def wait_exit_callback(callback):
     t = threading.Thread(target=t_func)
     t.setDaemon(True)
     t.start()
+
+    # Block signals in main thread
+    if sys.platform != "win32":
+        import signal
+        signal.pthread_sigmask(signal.SIG_BLOCK, [signal.SIGTERM,signal.SIGINT])
 
 def wait_exit_stop_loop(loop): 
     wait_exit_callback(lambda: loop.call_soon_threadsafe(loop.stop))
