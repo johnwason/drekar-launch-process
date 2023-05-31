@@ -6,7 +6,7 @@ import threading
 def wait_exit():
 
     #Wait for shutdown signal if running in service mode
-    print("Press Ctrl-C to quit...")
+    #print("Press Ctrl-C to quit...")
     if sys.platform == "win32":
         _win32_wait_exit()
     else:
@@ -18,7 +18,7 @@ def wait_exit_callback(callback):
         try:
             
             #Wait for shutdown signal if running in service mode
-            print("Press Ctrl-C to quit...")
+            #print("Press Ctrl-C to quit...")
             if sys.platform == "win32":
                 hwnd = _win32_create_message_hwnd()
                 def _stop_loop():
