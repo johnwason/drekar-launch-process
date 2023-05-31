@@ -1,4 +1,4 @@
-# Simple Launch Client
+# Simple Launch Process
 
 This library contains client utility functions for processes launched using `simple-launch`, although they may also be used without `simple-launch`. Currently this package provides a reliable way for processes to receive shutdown signals from a process manager or the user using `ctrl-c`.
 
