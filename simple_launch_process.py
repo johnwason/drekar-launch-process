@@ -65,6 +65,9 @@ if sys.platform == "win32":
     WM_DESTROY = 2
     WM_CLOSE = 16
     HWND_MESSAGE = ctypes.wintypes.HWND(-3)
+    CTRL_C_EVENT = 0
+    CTRL_BREAK_EVENT = 1
+    CTRL_CLOSE_EVENT = 2
 
     class WNDCLASSEX(ctypes.Structure):
         _fields_ = [("cbSize", ctypes.c_uint),
@@ -126,7 +129,8 @@ if sys.platform == "win32":
         # Install a ctrl-c handler to send WM_QUIT
 
         def ctrl_c_handler(code):
-            _win32_post_hwnd_close(hWnd)
+            if (code in (CTRL_C_EVENT, CTRL_BREAK_EVENT, CTRL_CLOSE_EVENT)):
+                _win32_post_hwnd_close(hWnd)
             return True
 
         ctrl_c_handler_ptr = CtrlCHandlerRoutine(ctrl_c_handler)
