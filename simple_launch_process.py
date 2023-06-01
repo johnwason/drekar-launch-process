@@ -59,7 +59,8 @@ if sys.platform == "win32":
     import ctypes
     import ctypes.wintypes
 
-    WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.wintypes.HWND, ctypes.c_uint, ctypes.wintypes.WPARAM, ctypes.wintypes.LPARAM)
+    WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.wintypes.LPARAM, ctypes.wintypes.HWND, ctypes.wintypes.UINT, 
+                                     ctypes.wintypes.WPARAM, ctypes.wintypes.LPARAM)
     CtrlCHandlerRoutine = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.DWORD)
     WM_DESTROY = 2
     WM_CLOSE = 16
@@ -85,11 +86,8 @@ if sys.platform == "win32":
         elif Msg == WM_CLOSE:
             ctypes.windll.user32.DestroyWindow(hWnd)
         else:
-            try:
-                # TODO: Why is this raising on error?
-                return ctypes.windll.user32.DefWindowProcW(hWnd, Msg, wParam, 0)
-            except ctypes.ArgumentError:
-                pass
+            return ctypes.windll.user32.DefWindowProcW(hWnd, Msg, ctypes.wintypes.WPARAM(wParam),
+                                                                ctypes.wintypes.LPARAM(lParam))
         return 0
 
     WndProc = WNDPROCTYPE(_PyWndProcedure)
