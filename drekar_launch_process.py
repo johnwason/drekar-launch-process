@@ -107,8 +107,8 @@ if sys.platform == "win32":
     def _win32_create_message_hwnd():
         
         hInst = ctypes.windll.kernel32.GetModuleHandleW(0)
-        wclassName = 'pyri_message_window'
-        wname = 'pyri_hidden_window'
+        wclassName = 'drekar_message_window'
+        wname = 'drekar_hidden_window'
         
         wndClass = WNDCLASSEX()
         wndClass.cbSize = ctypes.sizeof(WNDCLASSEX)
