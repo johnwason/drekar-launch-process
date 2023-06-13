@@ -2,17 +2,17 @@
 requires = ["setuptools", "wheel"]
 
 [project]
-name = "simple-launch-process"
-version = "0.1.1"
+name = "drekar-launch-process"
+version = "0.1.2"
 authors = [
     {name = "John Wason", email = "wason@wasontech.com"}
 ]
-description = "Client library for simple-launch"
+description = "Client library for drekar-launch"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.6"
 readme = "README.md"
 
 [tool.setuptools]
 py-modules = [
-    "simple_launch_process"
+    "drekar_launch_process"
 ]

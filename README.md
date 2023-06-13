@@ -1,13 +1,13 @@
-# Simple Launch Process
+# Drekar Launch Process
 
-This library contains client utility functions for processes launched using `simple-launch`, although they may also be used without `simple-launch`. Currently this package provides a reliable way for processes to receive shutdown signals from a process manager or the user using `ctrl-c`.
+This library contains client utility functions for processes launched using `drekar-launch`, although they may also be used without `drekar-launch`. Currently this package provides a reliable way for processes to receive shutdown signals from a process manager or the user using `ctrl-c`.
 
-See `simple-launch`: https://github.com/johnwason/simple-launch
+See `drekar-launch`: https://github.com/johnwason/drekar-launch
 
 ## Installation
 
 ```
-python -m pip install --user simple-launch-process
+python -m pip install --user drekar-launch-process
 ```
 
 On Ubuntu, it may be necessary to replace `python` with `python3`.
@@ -16,16 +16,16 @@ On Ubuntu, it may be necessary to replace `python` with `python3`.
 
 The module contains three functions:
 
-* `simple_launch_process.wait_exit()` - Block and wait for exit
-* `simple_launch_process.wait_exit_callback(callback)` - Return immediately and call `callback()` when shutdown signal received
-* `simple_launch_process.wait_exit_stop_loop(loop)` - Call to stop an `asyncio` loop when shutdown signal received
+* `drekar_launch_process.wait_exit()` - Block and wait for exit
+* `drekar_launch_process.wait_exit_callback(callback)` - Return immediately and call `callback()` when shutdown signal received
+* `drekar_launch_process.wait_exit_stop_loop(loop)` - Call to stop an `asyncio` loop when shutdown signal received
 
 ## Example
 
 A simple example of running a Python http server in a background thread, using the blocking `wait_exit()`.
 
 ```python
-import simple_launch_process
+import drekar_launch_process
 import threading
 from http import server as http_server
 
@@ -38,13 +38,13 @@ th = threading.Thread(target=run_server)
 th.daemon = True
 th.start()
 
-simple_launch_process.wait_exit()
+drekar_launch_process.wait_exit()
 ```
 
 This example uses the callback version to quit the http server:
 
 ```python
-import simple_launch_process
+import drekar_launch_process
 import threading
 from http import server as http_server
 
@@ -54,7 +54,7 @@ server=http_server.ThreadingHTTPServer(('',8085),
 def shutdown_server():
     server.shutdown()
 
-simple_launch_process.wait_exit_callback(shutdown_server)
+drekar_launch_process.wait_exit_callback(shutdown_server)
 
 server.serve_forever()
 ```
