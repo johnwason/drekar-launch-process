@@ -37,16 +37,6 @@ jobs:
     - name: test
       run: |
         python -m pytest -s
-  windows_test_unstable:
-    runs-on: windows-2022
-    steps:
-    - uses: actions/checkout@v3
-    - name: pip
-      run: |
-        pip install .[test]
-    - name: test
-      run: |
-        python -m pytest -s
   macos_test:
     runs-on: macos-latest
     steps:
