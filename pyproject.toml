@@ -16,3 +16,9 @@ readme = "README.md"
 py-modules = [
     "drekar_launch_process"
 ]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pywin32;platform_system=='Windows'"
+]
